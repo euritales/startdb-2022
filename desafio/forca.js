@@ -1,81 +1,84 @@
 class Forca {
-  constructor(palavraForca) {
-    this.palavraForca = palavraForca;
-    setPalavra(this.palavraForca);
+  constructor(palavra) {
+    this._palavra = palavra.toUpperCase().trim().split("");
+    this._palavraSecreta = "".padStart(palavra.length, "-").split("");
+    this._vidas = 6;
+    this._letrasChutadas = [];
   }
 
+  get getVida() {
+    return this._vidas;
+  }
+  get getPalavra() {
+    return this._palavra;
+  }
+  get getPalavraSeparada() {
+    return this._palavraSecreta;
+  }
+  get getLetrasChutadas() {
+    return this._letrasChutadas;
+  }
+  set setVida(value) {
+    this._vidas = value;
+  }
+  set setPalavra(value) {
+    this._palavra = value;
+  }
+  set setPalavraSeparada(value) {
+    this._palavraSecreta = value;
+  }
+  set setLetras(value) {
+    this._letrasChutadas = value;
+  }
   chutar(letra) {
-    // colocar lógica de alterar valores
-
-    if (letra.includes(this.buscarDadosDoJogo().getLetras())) {
-      console.log("Oxe, que viagem é essa?");
+    //Pensei em por uma verificação de tipo também, mas achei que poderia limitar a brincadeira
+    let chute = letra.toUpperCase();
+    if (chute.length != 1) {
+      return console.log("Você deve inserir uma letra por vez!");
+    } else if (this.getLetrasChutadas.includes(chute)) {
+      return console.log("Letra repetida. Por favor, tente outra!");
+    } else if (!this._palavra.includes(chute)) {
+      this._vidas--;
+      this._letrasChutadas.push(chute);
+      return console.log("PEM!!! Letra errada!");
+    } else {
+      //inserir troca de '-' por letras
+      this._letrasChutadas.push(chute);
+      for (let i = 0; i < this._palavra.length; i++) {
+        // console.log(this._palavraSecreta);
+        if (chute == this._palavra[i]) {
+          this._palavraSecreta.splice(i, 1, chute);
+        }
+      }
+      return console.log("Você acertou a letra!");
     }
     // console.log(this.palavra);
   }
 
   buscarEstado() {
+    console.log("ESTADO * * *");
     // colocar lógica de alterar estado
-    // console.log("---Estado---");
-    // console.log(`Vida: ${this.buscarDadosDoJogo().getVida()}`);
-    // console.log(`Letras Chutadas: ${this.buscarDadosDoJogo().getLetras()}`);
-    // console.log(`Palavra Misteriosa: ${this.buscarDadosDoJogo().getPalavra()}`);
-    return "aguardando chute";
-  } // Possiveis valores: "perdeu", "aguardando chute" ou "ganhou"
+    if (!this._palavraSecreta.includes("-")) {
+      return "ganhou";
+    }
+    if (this._vidas > 0) {
+      return "aguardando chute";
+    } else if (this._vidas == 0) {
+      return "perdeu";
+    }
+  }
+  // Possiveis valores: "perdeu", "aguardando chute" ou "ganhou"
 
   buscarDadosDoJogo() {
-    let letrasChutadas = ["a", "b", "c"]; // Deve conter todas as letras chutadas
-    let vidas = 6; // Quantidade de vidas restantes
-    let palavra = ""; // Deve ser um array com as letras que já foram acertadas ou o valor "_" para as letras não identificadas
-    let getLetras = function () {
-      return letrasChutadas;
+    const status = {
+      letraChutada: this._letrasChutadas,
+      vida: this._vidas,
+      palavra: this._palavraSecreta.join(""),
     };
-    let getVida = function () {
-      return vidas;
-    };
-    let getPalavra = function () {
-      return palavra;
-    };
-    let setLetras = function (value) {
-      return (letrasChutadas = value);
-    };
-    let setVida = function (value) {
-      return (vidas = value);
-    };
-    let setPalavra = function (value) {
-      return (palavra = value);
-    };
-
-    let metodos = {
-      getPalavra: getPalavra,
-      getVida: getVida,
-      getLetras: getLetras,
-      setPalavra: setPalavra,
-      setVida: setVida,
-      setLetras: setLetras,
-    };
-
-    Object.defineProperties(metodos, {
-      getPalavra: {
-        enumerable: false,
-      },
-      getVida: {
-        enumerable: false,
-      },
-      getLetras: {
-        enumerable: false,
-      },
-      setPalavra: {
-        enumerable: false,
-      },
-      setVida: {
-        enumerable: false,
-      },
-      setLetras: {
-        enumerable: false,
-      },
-    });
-
-    return metodos;
+    console.log("* * * STATUS JOGADOR * * *");
+    return console.log(
+      `Letra(s) chutadas: ${status.letraChutada}\nVida: ${status.vida}\nPalavra: ${status.palavra}`
+    );
   }
 }
 
@@ -101,4 +104,59 @@ Ex.: A palavra secreta é "bala" e o jogador chutou a letra "b", então a palavr
 8. Caso a quantidade de vidas chegue a 0 (zero), o estado do jogo deve mudar para `perdeu`.
 
 9. Caso a quantidade de vidas seja maior que zero e o jogador acerte a última letra, o estado do jogo deve mudar para `ganhou`.
+
+// let letrasChutadas = ["a", "b", "c"]; // Deve conter todas as letras chutadas
+    // let vidas = 6; // Quantidade de vidas restantes
+    // let palavra = ""; // Deve ser um array com as letras que já foram acertadas ou o valor "_" para as letras não identificadas
+    // let getLetras = function () {
+    //   return letrasChutadas;
+    // };
+    // let getVida = function () {
+    //   return vidas;
+    // };
+    // let getPalavra = function () {
+    //   return palavra;
+    // };
+    // let setLetras = function (value) {
+    //   return (letrasChutadas = value);
+    // };
+    // let setVida = function (value) {
+    //   return (vidas = value);
+    // };
+    // let setPalavra = function (value) {
+    //   return (palavra = value);
+    // };
+
+    // let metodos = {
+    //   getPalavra: getPalavra,
+    //   getVida: getVida,
+    //   getLetras: getLetras,
+    //   setPalavra: setPalavra,
+    //   setVida: setVida,
+    //   setLetras: setLetras,
+    // };
+
+    // Object.defineProperties(metodos, {
+    //   getPalavra: {
+    //     enumerable: false,
+    //   },
+    //   getVida: {
+    //     enumerable: false,
+    //   },
+    //   getLetras: {
+    //     enumerable: false,
+    //   },
+    //   setPalavra: {
+    //     enumerable: false,
+    //   },
+    //   setVida: {
+    //     enumerable: false,
+    //   },
+    //   setLetras: {
+    //     enumerable: false,
+    //   },
+    // });
+
+    // return metodos;
+
 */
