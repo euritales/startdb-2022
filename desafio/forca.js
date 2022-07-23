@@ -1,52 +1,51 @@
 class Forca {
   constructor(palavra) {
-    this._palavra = palavra.toUpperCase().trim().split("");
+    this.palavra = palavra.toUpperCase().trim().split("");
     this._palavraSecreta = "".padStart(palavra.length, "_").split("");
-    this._vidas = 6;
-    this._letrasChutadas = [];
+    this.vidas = 6;
+    this.letrasChutadas = [];
   }
 
   get getVida() {
-    return this._vidas;
+    return this.vidas;
   }
   get getPalavra() {
-    return this._palavra;
+    return this.palavra;
   }
   get getPalavraSeparada() {
     return this._palavraSecreta;
   }
   get getLetrasChutadas() {
-    return this._letrasChutadas;
+    return this.letrasChutadas;
   }
   set setVida(value) {
-    this._vidas = value;
+    this.vidas = value;
   }
   set setPalavra(value) {
-    this._palavra = value;
+    this.palavra = value;
   }
   set setPalavraSeparada(value) {
     this._palavraSecreta = value;
   }
   set setLetras(value) {
-    this._letrasChutadas = value;
+    this.letrasChutadas = value;
   }
   chutar(letra) {
-    //Pensei em por uma verificação de tipo também, mas achei que poderia limitar a brincadeira
+    //Pensei em por uma verificação de tipo, mas achei que poderia limitar a brincadeira
     console.log("________NOTIFICACAO________");
     let chute = letra.toUpperCase();
     if (chute.length != 1) {
       return console.log("- Você deve inserir uma letra por vez!");
     } else if (this.getLetrasChutadas.includes(chute)) {
       return console.log("- Letra repetida. Por favor, tente outra!");
-    } else if (!this._palavra.includes(chute)) {
-      this._vidas--;
-      this._letrasChutadas.push(chute);
+    } else if (!this.palavra.includes(chute)) {
+      this.vidas--;
+      this.letrasChutadas.push(chute);
       return console.log("- PEM!!! Letra errada!");
     } else {
-      //inserir troca de '-' por letras
-      this._letrasChutadas.push(chute);
-      for (let i = 0; i < this._palavra.length; i++) {
-        if (chute == this._palavra[i]) {
+      this.letrasChutadas.push(chute);
+      for (let i = 0; i < this.palavra.length; i++) {
+        if (chute == this.palavra[i]) {
           this._palavraSecreta.splice(i, 1, chute);
         }
       }
@@ -56,24 +55,23 @@ class Forca {
 
   buscarEstado() {
     console.log("\n__________________");
-    // colocar lógica de alterar estado
     if (!this._palavraSecreta.includes("_")) {
       return "ganhou";
-    } else if (this._vidas > 0) {
+    } else if (this.vidas > 0) {
       return "aguardando chute";
-    } else if (this._vidas == 0) {
+    } else if (this.vidas == 0) {
       return "perdeu";
     }
   } // Possiveis valores: "perdeu", "aguardando chute" ou "ganhou"
 
   desvendarPalavra() {
-    return console.log(`PALAVRA MISTERIOSA: "${this._palavra.join("")}"`);
+    return console.log(`PALAVRA MISTERIOSA: "${this.palavra.join("")}"`);
   }
 
   buscarDadosDoJogo() {
     const status = {
-      letraChutada: this._letrasChutadas,
-      vida: this._vidas,
+      letraChutada: this.letrasChutadas,
+      vida: this.vidas,
       palavra: this._palavraSecreta.join(""),
     };
     console.log("\n______STATUS JOGADOR______");
@@ -108,4 +106,5 @@ Ex.: A palavra secreta é "bala" e o jogador chutou a letra "b", então a palavr
 
 9. Caso a quantidade de vidas seja maior que zero e o jogador acerte a última letra, o estado do jogo deve mudar para `ganhou`. - V
 
+Esperar não ter quebrado nenhuma parte testando. - V
 */
