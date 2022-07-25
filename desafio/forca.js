@@ -70,13 +70,13 @@ class Forca {
 
   buscarDadosDoJogo() {
     const status = {
-      letraChutada: this.letrasChutadas,
-      vida: this.vidas,
+      letrasChutada: this.letrasChutadas,
+      vidas: this.vidas,
       palavra: this._palavraSecreta.join(""),
     };
     console.log("\n______STATUS JOGADOR______");
     console.log(
-      `| Letra(s) chutadas: ${status.letraChutada}\n| Vida: ${status.vida}\n| Palavra: ${status.palavra}`
+      `| Letra(s) chutadas: ${status.letrasChutada}\n| Vida: ${status.vidas}\n| Palavra: ${status.palavra}`
     );
     return "";
   }
