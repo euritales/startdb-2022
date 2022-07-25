@@ -17,9 +17,8 @@ let estadosEstaoCorretos = validarEtapa(
 estadosEstaoCorretos =
   estadosEstaoCorretos &&
   validarEtapa(6, "abacaxi", "abcxi", "ganhou", jogoForca);
-const mensagemFinal =
-  estadosEstaoCorretos == true
-    ? "Regras validadas com sucesso"
-    : "Parece que algo está errado, verique suas regras";
+const mensagemFinal = estadosEstaoCorretos
+  ? "Regras validadas com sucesso"
+  : "Parece que algo está errado, verique suas regras";
 console.log(estadosEstaoCorretos);
 console.log(mensagemFinal);
