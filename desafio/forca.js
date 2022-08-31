@@ -69,16 +69,11 @@ class Forca {
   }
 
   buscarDadosDoJogo() {
-    const status = {
-      letrasChutada: this.letrasChutadas,
-      vidas: this.vidas,
-      palavra: this._palavraSecreta.join(""),
+    return {
+      vidas: this.getVida,
+      _palavraSecreta: this.getPalavraSeparada,
+      letrasChutadas: this.getLetrasChutadas,
     };
-    console.log("\n______STATUS JOGADOR______");
-    console.log(
-      `| Letra(s) chutadas: ${status.letrasChutada}\n| Vida: ${status.vidas}\n| Palavra: ${status.palavra}`
-    );
-    return "";
   }
 }
 

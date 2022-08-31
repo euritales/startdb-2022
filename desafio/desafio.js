@@ -1,7 +1,7 @@
 const readline = require("readline-sync");
 const Forca = require("./forca");
 
-const jogo = new Forca("Espacos-em-branco-nao-sao-validos");
+const jogo = new Forca("ABACAXI");
 
 while (!["perdeu", "ganhou"].includes(jogo.buscarEstado())) {
   const chute = readline.question("Aguardando chute: \n");
